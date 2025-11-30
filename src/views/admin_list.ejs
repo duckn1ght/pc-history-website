@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Экспонаты | Админ-панель</title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <div class="container">
+    <div class="admin-nav">
+      <a href="/admin/add">Добавить экспонат</a>
+      <a href="/admin/logout">Выйти</a>
+    </div>
+    <h2>Экспонаты</h2>
+    <ul>
+      <% exhibits.forEach(function(ex) { %>
+        <li>
+          <%= ex.name %> (<%= ex.year || '' %>)
+          <a href="/admin/edit/<%= ex.id %>">✏️</a>
+          <a href="/admin/delete/<%= ex.id %>" onclick="return confirm('Удалить?')">🗑️</a>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+</body>
+</html>

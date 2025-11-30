@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Добавить экспонат | Админ-панель</title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <div class="container">
+    <div class="admin-nav">
+      <a href="/admin">Назад</a>
+      <a href="/admin/logout">Выйти</a>
+    </div>
+    <h2>Добавить экспонат</h2>
+    <form method="post" action="/admin/add" enctype="multipart/form-data">
+      <input name="name" placeholder="Название" required>
+      <input name="year" placeholder="Год">
+      <textarea name="description" placeholder="Описание"></textarea>
+      <input type="file" name="image">
+      <button type="submit">Сохранить</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title><%= exhibit.name %> | Музей ПК</title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <div class="container">
+    <h1><%= exhibit.name %></h1>
+    <% if (exhibit.year) { %><p>Год: <%= exhibit.year %></p><% } %>
+    <% if (exhibit.image) { %><img src="<%= exhibit.image %>" alt="<%= exhibit.name %>"><% } %>
+    <p><%= exhibit.description %></p>
+    <a href="/exhibits">К списку экспонатов</a>
+  </div>
+</body>
+</html>

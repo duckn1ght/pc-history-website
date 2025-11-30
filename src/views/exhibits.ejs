@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Экспонаты | Музей ПК</title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Экспонаты</h1>
+    <ul>
+      <% exhibits.forEach(function(ex) { %>
+        <li>
+          <a href="/exhibits/<%= ex.id %>"><%= ex.name %></a>
+          <% if (ex.year) { %> (<%= ex.year %>) <% } %>
+        </li>
+      <% }) %>
+    </ul>
+    <a href="/">На главную</a>
+  </div>
+</body>
+</html>
