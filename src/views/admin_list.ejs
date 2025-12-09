@@ -2,25 +2,58 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Экспонаты | Админ-панель</title>
   <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-  <div class="container">
-    <div class="admin-nav">
-      <a href="/admin/add">Добавить экспонат</a>
-      <a href="/admin/logout">Выйти</a>
+  <section class="page-hero">
+    <div class="container">
+      <div class="admin-nav">
+        <a href="/admin/add" class="btn btn-primary">Добавить экспонат</a>
+        <a href="/admin/logout" class="btn">Выйти</a>
+      </div>
+      <h1>Экспонаты</h1>
+      <p>Редактируйте карточки, изображения и описания. Изменения сразу видны на сайте.</p>
     </div>
-    <h2>Экспонаты</h2>
-    <ul>
-      <% exhibits.forEach(function(ex) { %>
-        <li>
-          <%= ex.name %> (<%= ex.year || '' %>)
-          <a href="/admin/edit/<%= ex.id %>">✏️</a>
-          <a href="/admin/delete/<%= ex.id %>" onclick="return confirm('Удалить?')">🗑️</a>
-        </li>
-      <% }) %>
-    </ul>
-  </div>
+  </section>
+
+  <section class="page">
+    <div class="container">
+      <div class="tiles-grid">
+        <% exhibits.forEach(function(ex) { %>
+          <article class="tile-card">
+            <div class="tile-thumb">
+              <% if (ex.image) { %>
+                <img src="<%= ex.image %>" alt="<%= ex.name %>">
+              <% } %>
+              <div class="tile-badge">ID <%= ex.id %></div>
+              <div class="tile-admin-actions">
+                <a class="btn" href="/admin/edit/<%= ex.id %>">✏️</a>
+                <a class="btn danger" href="/admin/delete/<%= ex.id %>" onclick="return confirm('Удалить?')">🗑️</a>
+              </div>
+            </div>
+            <div class="tile-body">
+              <div>
+                <p class="muted" style="margin-bottom:0.2rem;"><%= ex.year || 'Год не указан' %></p>
+                <h3><%= ex.name %></h3>
+              </div>
+              <div class="tile-actions">
+                <% if (ex.model3d) { %>
+                  <span class="tag">3D доступен</span>
+                <% } %>
+              </div>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Музей Персональных Компьютеров.</p>
+    </div>
+  </footer>
 </body>
 </html>

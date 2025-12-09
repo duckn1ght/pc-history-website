@@ -2,17 +2,43 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Регистрация администратора</title>
+  <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-  <h2>Регистрация администратора</h2>
-  <form method="post" action="/admin/register">
-    <input name="username" placeholder="Логин" required>
-    <input name="password" type="password" placeholder="Пароль" required>
-    <button type="submit">Зарегистрировать</button>
-  </form>
-  <% if (typeof error !== 'undefined') { %>
-    <p style="color:red"><%= error %></p>
-  <% } %>
+  <section class="page-hero">
+    <div class="container">
+      <h1>Регистрация администратора</h1>
+      <p>Создайте учетную запись для управления коллекцией.</p>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="container">
+      <div class="content-box" style="max-width:520px;margin:0 auto;">
+        <form method="post" action="/admin/register" class="form-grid">
+          <label>Логин
+            <input name="username" placeholder="Логин" required>
+          </label>
+          <label>Пароль
+            <input name="password" type="password" placeholder="Пароль" required>
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Зарегистрировать</button>
+          </div>
+        </form>
+        <% if (typeof error !== 'undefined') { %>
+          <p class="error" style="margin-top:0.5rem;"><%= error %></p>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Музей Персональных Компьютеров.</p>
+    </div>
+  </footer>
 </body>
 </html>

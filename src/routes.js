@@ -27,6 +27,15 @@ router.get('/exhibits/:id', (req, res) => {
   });
 });
 
+// Отдельный экран для 3D просмотра
+router.get('/exhibits/:id/3d', (req, res) => {
+  db.get('SELECT * FROM exhibits WHERE id = ?', [req.params.id], (err, exhibit) => {
+    if (err || !exhibit) return res.status(404).send('Экспонат не найден');
+    if (!exhibit.model3d) return res.redirect('/exhibits/' + req.params.id);
+    res.render('exhibit_3d', { exhibit });
+  });
+});
+
 // О музее
 router.get('/about', (req, res) => {
   res.render('about');

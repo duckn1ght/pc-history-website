@@ -2,16 +2,51 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= exhibit.name %> | Музей ПК</title>
   <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-  <div class="container">
-    <h1><%= exhibit.name %></h1>
-    <% if (exhibit.year) { %><p>Год: <%= exhibit.year %></p><% } %>
-    <% if (exhibit.image) { %><img src="<%= exhibit.image %>" alt="<%= exhibit.name %>"><% } %>
-    <p><%= exhibit.description %></p>
-    <a href="/exhibits">К списку экспонатов</a>
-  </div>
+  <section class="page-hero">
+    <div class="container">
+      <h1><%= exhibit.name %></h1>
+      <p>Детальный обзор экспоната и его 3D-модель, доступная для просмотра онлайн.</p>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="container">
+      <div class="content-box">
+        <div class="info-grid">
+          <div>
+            <% if (exhibit.year) { %>
+              <p class="meta">Год: <%= exhibit.year %></p>
+            <% } %>
+            <p><%= exhibit.description || 'Описание будет добавлено позже.' %></p>
+            <% if (exhibit.model3d) { %>
+              <div class="tag">3D просмотр доступен</div>
+            <% } %>
+          </div>
+          <div>
+            <% if (exhibit.image) { %>
+              <img class="detail-image" src="<%= exhibit.image %>" alt="<%= exhibit.name %>">
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <div class="page-section">
+        <% if (exhibit.model3d) { %>
+          <a class="btn btn-primary" href="/exhibits/<%= exhibit.id %>/3d">Открыть 3D</a>
+        <% } %>
+        <a class="btn" href="/exhibits" style="margin-left:0.5rem;">К списку экспонатов</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Музей Персональных Компьютеров.</p>
+    </div>
+  </footer>
 </body>
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= exhibit.name %> | 3D просмотр</title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <section class="page-hero">
+    <div class="container">
+      <h1><%= exhibit.name %> — 3D просмотр</h1>
+      <p>Поворачивайте, приближайте и изучайте модель экспоната в браузере.</p>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="container">
+      <div class="content-box">
+        <div class="viewer" data-model="<%= exhibit.model3d %>"></div>
+      </div>
+      <div class="page-section" style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+        <a class="btn btn-primary" href="/exhibits/<%= exhibit.id %>">К описанию</a>
+        <a class="btn" href="/exhibits">К списку экспонатов</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Музей Персональных Компьютеров.</p>
+    </div>
+  </footer>
+  <script type="module" src="/scripts/viewer.js"></script>
+</body>
+</html>

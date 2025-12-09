@@ -12,8 +12,14 @@ const init = () => {
     name TEXT NOT NULL,
     year INTEGER,
     description TEXT,
-    image TEXT
+    image TEXT,
+    model3d TEXT
   )`);
+
+  // Добавляем колонку model3d, если база создана без неё
+  db.run('ALTER TABLE exhibits ADD COLUMN model3d TEXT', err => {
+    // Игнорируем ошибку, если колонка уже существует
+  });
 };
 
 module.exports = { db, init };

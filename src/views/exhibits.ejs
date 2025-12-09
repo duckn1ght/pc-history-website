@@ -2,21 +2,50 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Экспонаты | Музей ПК</title>
   <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Экспонаты</h1>
-    <ul>
-      <% exhibits.forEach(function(ex) { %>
-        <li>
-          <a href="/exhibits/<%= ex.id %>"><%= ex.name %></a>
-          <% if (ex.year) { %> (<%= ex.year %>) <% } %>
-        </li>
-      <% }) %>
-    </ul>
-    <a href="/">На главную</a>
-  </div>
+  <section class="page-hero">
+    <div class="container">
+      <h1>Экспонаты</h1>
+      <p>Изучайте коллекцию и просматривайте 3D-модели легендарных компьютеров прямо в браузере.</p>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="container">
+      <div class="tiles-grid">
+        <% exhibits.forEach(function(ex) { %>
+          <article class="tile-card">
+            <div class="tile-thumb">
+              <% if (ex.image) { %>
+                <img src="<%= ex.image %>" alt="<%= ex.name %>">
+              <% } %>
+            </div>
+            <div class="tile-body">
+              <div>
+                <p class="muted" style="margin-bottom:0.2rem;"><%= ex.year || 'Год не указан' %></p>
+                <h3><%= ex.name %></h3>
+              </div>
+              <div class="tile-actions">
+                <% if (ex.model3d) { %>
+                  <span class="tag">3D доступен</span>
+                <% } %>
+                <a class="btn btn-primary" href="/exhibits/<%= ex.id %>">Подробнее</a>
+              </div>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Музей Персональных Компьютеров.</p>
+    </div>
+  </footer>
 </body>
 </html>

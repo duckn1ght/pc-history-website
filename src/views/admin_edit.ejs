@@ -2,26 +2,62 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Редактировать экспонат | Админ-панель</title>
   <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-  <div class="container">
-    <div class="admin-nav">
-      <a href="/admin">Назад</a>
-      <a href="/admin/logout">Выйти</a>
+  <section class="page-hero">
+    <div class="container">
+      <div class="admin-nav">
+        <a href="/admin" class="btn">Назад</a>
+        <a href="/admin/logout" class="btn danger">Выйти</a>
+      </div>
+      <h1>Редактировать экспонат</h1>
+      <p>Обновите данные, описание и изображение. Сохранение выполняется сразу.</p>
     </div>
-    <h2>Редактировать экспонат</h2>
-    <form method="post" action="/admin/edit/<%= exhibit.id %>" enctype="multipart/form-data">
-      <input name="name" value="<%= exhibit.name %>" required>
-      <input name="year" value="<%= exhibit.year || '' %>">
-      <textarea name="description"><%= exhibit.description || '' %></textarea>
-      <input type="file" name="image">
-      <% if (exhibit.image) { %>
-        <br>Текущее изображение: <img src="<%= exhibit.image %>" style="max-width:100px;">
-      <% } %>
-      <button type="submit">Сохранить</button>
-    </form>
-  </div>
+  </section>
+
+  <section class="page">
+    <div class="container">
+      <div class="content-box">
+        <form method="post" action="/admin/edit/<%= exhibit.id %>" enctype="multipart/form-data" class="form-grid">
+          <label>Название
+            <input name="name" value="<%= exhibit.name %>" required>
+          </label>
+          <label>Год
+            <input name="year" value="<%= exhibit.year || '' %>">
+          </label>
+          <label>Описание
+            <textarea name="description"><%= exhibit.description || '' %></textarea>
+          </label>
+          <label>Новое изображение
+            <input type="file" name="image" accept="image/*">
+          </label>
+          <label>3D модель (.glb)
+            <input type="file" name="model3d" accept=".glb,model/gltf-binary">
+          </label>
+          <% if (exhibit.image) { %>
+            <div class="current-image" style="display:flex;align-items:center;gap:0.75rem;">
+              <span class="muted">Текущее изображение:</span>
+              <img src="<%= exhibit.image %>" alt="<%= exhibit.name %>" style="max-width:140px;border-radius:12px;object-fit:cover;">
+            </div>
+          <% } %>
+          <% if (exhibit.model3d) { %>
+            <p class="muted">Текущая 3D модель: <a href="<%= exhibit.model3d %>" target="_blank" rel="noopener">скачать</a></p>
+          <% } %>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Музей Персональных Компьютеров.</p>
+    </div>
+  </footer>
 </body>
 </html>

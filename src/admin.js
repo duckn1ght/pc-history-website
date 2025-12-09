@@ -76,13 +76,18 @@ router.get('/add', requireAuth, (req, res) => {
 });
 
 // Обработка добавления экспоната (требует авторизации)
-router.post('/add', requireAuth, upload.single('image'), (req, res) => {
+router.post('/add', requireAuth, upload.any(), (req, res) => {
   const { name, year, description } = req.body;
   let imagePath = '';
-  if (req.file) {
-    imagePath = '/uploads/' + req.file.filename;
-  }
-  db.run('INSERT INTO exhibits (name, year, description, image) VALUES (?, ?, ?, ?)', [name, year, description, imagePath], function(err) {
+  let modelPath = '';
+
+  const imageFile = (req.files || []).find(f => f.fieldname === 'image');
+  const modelFile = (req.files || []).find(f => f.fieldname === 'model3d');
+
+  if (imageFile) imagePath = '/uploads/' + imageFile.filename;
+  if (modelFile) modelPath = '/uploads/' + modelFile.filename;
+
+  db.run('INSERT INTO exhibits (name, year, description, image, model3d) VALUES (?, ?, ?, ?, ?)', [name, year, description, imagePath, modelPath], function(err) {
     if (err) return res.status(500).send('Ошибка при добавлении');
     res.redirect('/admin');
   });
@@ -97,21 +102,34 @@ router.get('/edit/:id', requireAuth, (req, res) => {
 });
 
 // Обработка редактирования экспоната (требует авторизации)
-router.post('/edit/:id', requireAuth, upload.single('image'), (req, res) => {
+router.post('/edit/:id', requireAuth, upload.any(), (req, res) => {
   const { name, year, description } = req.body;
   db.get('SELECT * FROM exhibits WHERE id = ?', [req.params.id], (err, ex) => {
     if (err || !ex) return res.status(404).send('Экспонат не найден');
     let imagePath = ex.image;
+    let modelPath = ex.model3d;
     const fs = require('fs');
-    if (req.file) {
-      // Удалить старую картинку, если была
+
+    const imageFile = (req.files || []).find(f => f.fieldname === 'image');
+    const modelFile = (req.files || []).find(f => f.fieldname === 'model3d');
+
+    if (imageFile) {
       if (ex.image && ex.image.startsWith('/uploads/')) {
         const oldPath = path.join(__dirname, 'public', ex.image);
-        fs.unlink(oldPath, err => {}); // Игнорируем ошибку
+        fs.unlink(oldPath, err => {});
       }
-      imagePath = '/uploads/' + req.file.filename;
+      imagePath = '/uploads/' + imageFile.filename;
     }
-    db.run('UPDATE exhibits SET name=?, year=?, description=?, image=? WHERE id=?', [name, year, description, imagePath, req.params.id], function(err) {
+
+    if (modelFile) {
+      if (ex.model3d && ex.model3d.startsWith('/uploads/')) {
+        const oldModel = path.join(__dirname, 'public', ex.model3d);
+        fs.unlink(oldModel, err => {});
+      }
+      modelPath = '/uploads/' + modelFile.filename;
+    }
+
+    db.run('UPDATE exhibits SET name=?, year=?, description=?, image=?, model3d=? WHERE id=?', [name, year, description, imagePath, modelPath, req.params.id], function(err) {
       if (err) return res.status(500).send('Ошибка при обновлении');
       res.redirect('/admin');
     });

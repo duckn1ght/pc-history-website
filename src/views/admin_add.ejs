@@ -2,23 +2,53 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Добавить экспонат | Админ-панель</title>
   <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-  <div class="container">
-    <div class="admin-nav">
-      <a href="/admin">Назад</a>
-      <a href="/admin/logout">Выйти</a>
+  <section class="page-hero">
+    <div class="container">
+      <div class="admin-nav">
+        <a href="/admin" class="btn">Назад</a>
+        <a href="/admin/logout" class="btn danger">Выйти</a>
+      </div>
+      <h1>Добавить экспонат</h1>
+      <p>Заполните данные и загрузите изображение. Поддерживаются большие файлы с сохранением качества.</p>
     </div>
-    <h2>Добавить экспонат</h2>
-    <form method="post" action="/admin/add" enctype="multipart/form-data">
-      <input name="name" placeholder="Название" required>
-      <input name="year" placeholder="Год">
-      <textarea name="description" placeholder="Описание"></textarea>
-      <input type="file" name="image">
-      <button type="submit">Сохранить</button>
-    </form>
-  </div>
+  </section>
+
+  <section class="page">
+    <div class="container">
+      <div class="content-box">
+        <form method="post" action="/admin/add" enctype="multipart/form-data" class="form-grid">
+          <label>Название
+            <input name="name" placeholder="Например, Apple II" required>
+          </label>
+          <label>Год
+            <input name="year" placeholder="1977">
+          </label>
+          <label>Описание
+            <textarea name="description" placeholder="Краткое описание экспоната"></textarea>
+          </label>
+          <label>Изображение
+            <input type="file" name="image" accept="image/*">
+          </label>
+          <label>3D модель (.glb)
+            <input type="file" name="model3d" accept=".glb,model/gltf-binary">
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Музей Персональных Компьютеров.</p>
+    </div>
+  </footer>
 </body>
 </html>
